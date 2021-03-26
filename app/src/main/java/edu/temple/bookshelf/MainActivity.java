@@ -2,23 +2,24 @@ package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements BookListFragment.FragmentInterface {
+public class MainActivity extends AppCompatActivity implements BookListFragment.BookListFragmentInterface {
 
-    FragmentManager fragmentManager;
-    FragmentTransaction ft;
     BookListFragment bookListFragment;
     BookDetailsFragment bookDetailsFragment;
     BookList bookList;
+    boolean hasContainer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        hasContainer2 = findViewById(R.id.container2) != null;
 
         bookList = new BookList();
         String[] titlesAndAuthors = getResources().getStringArray(R.array.books);
@@ -28,29 +29,87 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             bookList.add(book);
         }
 
-        // Building list fragment
-        new BookListFragment();
         bookListFragment = BookListFragment.newInstance(bookList);
-        fragmentManager = getSupportFragmentManager();
+        bookDetailsFragment = (BookDetailsFragment)getSupportFragmentManager().findFragmentByTag("DETAILSADDED");
 
-        ft = fragmentManager.beginTransaction();
-        ft.add(R.id.container, bookListFragment);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container1, bookListFragment)
+                .commit();
 
-        ft.commit();
+        if (bookDetailsFragment != null && !hasContainer2) {
 
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(bookDetailsFragment)
+                    .remove(bookListFragment)
+                    .commit();
+
+            getSupportFragmentManager().executePendingTransactions();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container1, bookDetailsFragment, "DETAILSADDED")
+                    .addToBackStack(null)
+                    .commit();
+
+            }
+
+        if (hasContainer2) {
+
+            bookDetailsFragment = (BookDetailsFragment)getSupportFragmentManager().findFragmentByTag("DETAILSADDED");
+
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            if (bookDetailsFragment == null) {
+
+                bookDetailsFragment = new BookDetailsFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container2, bookDetailsFragment)
+                        .commit();
+
+            } else {
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(bookListFragment)
+                        .remove(bookDetailsFragment)
+                        .commit();
+
+                getSupportFragmentManager().executePendingTransactions();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container1, bookListFragment)
+                        .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        }
     }
 
     public void fragmentClick(int position) {
 
-        Book book = bookList.get(position);
-        new BookDetailsFragment();
-        bookDetailsFragment = BookDetailsFragment.newInstance(book);
+        if (!hasContainer2) {
 
-        ft = fragmentManager.beginTransaction();
-        ft.remove(bookListFragment);
-        ft.add(R.id.container, bookDetailsFragment);
-        ft.commit();
+            bookDetailsFragment = BookDetailsFragment.newInstance(bookList.get(position));
 
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container1, bookDetailsFragment, "DETAILSADDED")
+                    .addToBackStack(null)
+                    .commit();
+
+        } else {
+
+            Log.e("Error", "display booking xD");
+            bookDetailsFragment.displayBook(bookList.get(position));
+
+        }
     }
-
 }
+

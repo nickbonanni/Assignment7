@@ -10,6 +10,8 @@ import android.widget.TextView;
 public class BookDetailsFragment extends Fragment {
 
     Book book;
+    TextView textViewTitle;
+    TextView textViewAuthor;
 
     public BookDetailsFragment() {
         // Required empty public constructor
@@ -42,6 +44,8 @@ public class BookDetailsFragment extends Fragment {
             String title = myBundle.getString("TITLE");
             String author = myBundle.getString("AUTHOR");
             book = new Book(title, author);
+        } else {
+            book = null;
         }
 
     }
@@ -49,16 +53,28 @@ public class BookDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View layout =  inflater.inflate(R.layout.fragment_book_details, container, false);
 
-        TextView textViewTitle = layout.findViewById(R.id.textViewTitle);
-        textViewTitle.setText(book.getTitle());
-        textViewTitle.setTextSize(40);
-        TextView textViewAuthor = layout.findViewById(R.id.textViewAuthor);
-        textViewAuthor.setText(book.getAuthor());
-        textViewAuthor.setTextSize(30);
+        textViewTitle = layout.findViewById(R.id.textViewTitle);
+        textViewAuthor = layout.findViewById(R.id.textViewAuthor);
+
+        if (book != null) {
+            displayBook(book);
+        }
 
         return layout;
     }
+
+    public void displayBook(Book book) {
+
+        textViewTitle.setText(book.getTitle());
+        textViewTitle.setTextSize(40);
+
+        textViewAuthor.setText(book.getAuthor());
+        textViewAuthor.setTextSize(30);
+
+    }
+
 }

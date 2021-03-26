@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class BookListFragment extends Fragment {
 
-    BookList bookList;
+    private BookList bookList;
 
     public BookListFragment() {
         // Required empty public constructor
@@ -65,7 +65,7 @@ public class BookListFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((FragmentInterface)getActivity()).fragmentClick(position);
+                ((BookListFragmentInterface)getActivity()).fragmentClick(position);
             }
 
         });
@@ -73,7 +73,8 @@ public class BookListFragment extends Fragment {
         return layout;
     }
 
-    interface FragmentInterface {
+
+    interface BookListFragmentInterface {
         void fragmentClick(int position);
     }
 
