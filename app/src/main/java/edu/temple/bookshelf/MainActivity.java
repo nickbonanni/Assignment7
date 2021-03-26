@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.FragmentInterface {
 
@@ -12,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookListFragment bookListFragment;
     BookDetailsFragment bookDetailsFragment;
     BookList bookList;
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         }
 
         // Building list fragment
-        bookListFragment = new BookListFragment().newInstance(bookList);
+        new BookListFragment();
+        bookListFragment = BookListFragment.newInstance(bookList);
         fragmentManager = getSupportFragmentManager();
 
         ft = fragmentManager.beginTransaction();
@@ -40,8 +41,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     public void fragmentClick(int position) {
-        bundle.putInt("POSITION", position);
-        bookDetailsFragment.setArguments(bundle);
+
+        Book book = bookList.get(position);
+        new BookDetailsFragment();
+        bookDetailsFragment = BookDetailsFragment.newInstance(book);
+
+        ft = fragmentManager.beginTransaction();
+        ft.remove(bookListFragment);
+        ft.add(R.id.container, bookDetailsFragment);
+        ft.commit();
+
     }
 
 }
