@@ -1,6 +1,7 @@
 package edu.temple.bookshelf;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookList {
 
@@ -24,6 +25,16 @@ public class BookList {
 
     public int size() {
         return bookList.size();
+    }
+
+    public ArrayList<String> getList(int position) {
+
+        ArrayList<String> list = new ArrayList<String>(2);
+        Book book = bookList.get(position);
+        list.add(book.getTitle());
+        list.add(book.getAuthor());
+        return list;
+
     }
 
 }
