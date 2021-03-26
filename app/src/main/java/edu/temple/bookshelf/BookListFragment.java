@@ -46,7 +46,6 @@ public class BookListFragment extends Fragment {
                 bookList.add(book);
             }
         }
-
     }
 
     @Override
@@ -77,5 +76,4 @@ public class BookListFragment extends Fragment {
     interface BookListFragmentInterface {
         void fragmentClick(int position);
     }
-
 }

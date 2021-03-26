@@ -2,9 +2,7 @@ package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookListFragmentInterface {
 
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         if (bookDetailsFragment != null && !hasContainer2) {
 
-            Log.e("Error", "In here?");
             getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             getSupportFragmentManager()
@@ -89,18 +86,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .commit();
 
         }
-
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
 
         hasList = (BookListFragment)getSupportFragmentManager().findFragmentByTag("LISTADDED") != null;
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0 && !hasList) {
-
-            Log.e("Error", "In HEREEEEEEEEEEEE?");
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -108,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .commit();
         }
 
-        super.onBackPressed();  // optional depending on your needs
+        super.onBackPressed();
     }
 
     public void fragmentClick(int position) {

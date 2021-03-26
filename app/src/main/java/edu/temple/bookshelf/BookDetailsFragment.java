@@ -76,5 +76,4 @@ public class BookDetailsFragment extends Fragment {
         textViewAuthor.setTextSize(30);
 
     }
-
 }

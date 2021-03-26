@@ -1,7 +1,6 @@
 package edu.temple.bookshelf;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookList {
 
@@ -36,5 +35,4 @@ public class BookList {
         return list;
 
     }
-
 }
