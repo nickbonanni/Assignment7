@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookDetailsFragment bookDetailsFragment;
     BookList bookList;
     boolean hasContainer2;
+    boolean hasList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container1, bookListFragment)
+                .replace(R.id.container1, bookListFragment, "LISTADDED")
                 .commit();
 
         if (bookDetailsFragment != null && !hasContainer2) {
@@ -72,9 +73,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container1, bookListFragment)
+                    .replace(R.id.container1, bookListFragment, "LISTADDED")
                     .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
-                    .addToBackStack(null)
                     .commit();
 
             }
@@ -96,10 +96,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     public void onBackPressed()
     {
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container1, bookListFragment)
-                .commit();
+        hasList = (BookListFragment)getSupportFragmentManager().findFragmentByTag("LISTADDED") != null;
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 && !hasList) {
+
+            Log.e("Error", "In HEREEEEEEEEEEEE?");
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container1, bookListFragment, "LISTADDED")
+                    .commit();
+        }
 
         super.onBackPressed();  // optional depending on your needs
     }
@@ -124,9 +131,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container1, bookListFragment)
                     .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
-                    .addToBackStack(null)
                     .commit();
 
         }
