@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         if (bookDetailsFragment != null && !hasContainer2) {
 
+            Log.e("Error", "In here?");
             getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             getSupportFragmentManager()
@@ -57,39 +58,50 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             }
 
-        if (hasContainer2) {
-
-            bookDetailsFragment = (BookDetailsFragment)getSupportFragmentManager().findFragmentByTag("DETAILSADDED");
+        else if (bookDetailsFragment != null && hasContainer2) {
 
             getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-            if (bookDetailsFragment == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(bookListFragment)
+                    .remove(bookDetailsFragment)
+                    .commit();
 
-                bookDetailsFragment = new BookDetailsFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container2, bookDetailsFragment)
-                        .commit();
+            getSupportFragmentManager().executePendingTransactions();
 
-            } else {
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .remove(bookListFragment)
-                        .remove(bookDetailsFragment)
-                        .commit();
-
-                getSupportFragmentManager().executePendingTransactions();
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container1, bookListFragment)
-                        .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
-                        .addToBackStack(null)
-                        .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container1, bookListFragment)
+                    .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
+                    .addToBackStack(null)
+                    .commit();
 
             }
+
+        else if (hasContainer2) {
+
+            bookDetailsFragment = new BookDetailsFragment();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container2, bookDetailsFragment)
+                    .commit();
+
         }
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container1, bookListFragment)
+                .commit();
+
+        super.onBackPressed();  // optional depending on your needs
     }
 
     public void fragmentClick(int position) {
@@ -106,10 +118,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         } else {
 
-            Log.e("Error", "display booking xD");
             bookDetailsFragment.displayBook(bookList.get(position));
+
+            bookDetailsFragment = BookDetailsFragment.newInstance(bookList.get(position));
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container1, bookListFragment)
+                    .replace(R.id.container2, bookDetailsFragment, "DETAILSADDED")
+                    .addToBackStack(null)
+                    .commit();
 
         }
     }
 }
-
