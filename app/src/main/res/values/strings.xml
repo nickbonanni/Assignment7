@@ -1,29 +1,7 @@
 <resources>
     <string name="app_name">BookShelf</string>
-
-    <string-array name="books">
-        <item>To Kill A Mockingbird</item>
-        <item>Harper Lee</item>
-        <item>Harry Potter</item>
-        <item>J.K. Rowling</item>
-        <item>Enders Game</item>
-        <item>Orson Scott Card</item>
-        <item>Twilight</item>
-        <item>Stephenie Meyer</item>
-        <item>Heat</item>
-        <item>Mike Lupica</item>
-        <item>Sherlock Holmes</item>
-        <item>Arthur Conan Doyle</item>
-        <item>It</item>
-        <item>Stephen King</item>
-        <item>Percy Jackson</item>
-        <item>Rick Riordan</item>
-        <item>Game of Thrones</item>
-        <item>George R.R. Martin</item>
-        <item>The Hitchhikers Guide to the Galaxy</item>
-        <item>Douglas Adams</item>
-    </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_book_search">BookSearchActivity</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

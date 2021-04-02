@@ -4,6 +4,8 @@ public class Book {
 
     String title;
     String author;
+    String coverURL;
+    int id;
 
     public Book(String title, String author) {
         this.title = title;

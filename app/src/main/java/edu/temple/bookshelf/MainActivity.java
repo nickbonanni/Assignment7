@@ -2,7 +2,11 @@ package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookListFragmentInterface {
 
@@ -11,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookList bookList;
     boolean hasContainer2;
     boolean hasList;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +24,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         setContentView(R.layout.activity_main);
 
         hasContainer2 = findViewById(R.id.container2) != null;
+        searchButton = (Button) findViewById(R.id.searchButton);
 
         bookList = new BookList();
-        String[] titlesAndAuthors = getResources().getStringArray(R.array.books);
-
-        for (int i = 0; i <= 18; i += 2) {
-            Book book = new Book(titlesAndAuthors[i], titlesAndAuthors[i + 1]);
-            bookList.add(book);
-        }
 
         bookListFragment = BookListFragment.newInstance(bookList);
         bookDetailsFragment = (BookDetailsFragment)getSupportFragmentManager().findFragmentByTag("DETAILSADDED");
@@ -86,6 +86,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .commit();
 
         }
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

@@ -21,11 +21,13 @@ public class BookListFragment extends Fragment {
 
         BookListFragment newFragment = new BookListFragment();
 
-        Bundle newBundle = new Bundle();
-        for (int i = 0; i < 10; i++) {
-            newBundle.putStringArrayList("book" + i, booklist.getList(i));
+        if (booklist.size() > 0) {
+            Bundle newBundle = new Bundle();
+            for (int i = 0; i < booklist.size(); i++) {
+                newBundle.putStringArrayList("book" + i, booklist.getList(i));
+            }
+            newFragment.setArguments(newBundle);
         }
-        newFragment.setArguments(newBundle);
 
         return newFragment;
     }

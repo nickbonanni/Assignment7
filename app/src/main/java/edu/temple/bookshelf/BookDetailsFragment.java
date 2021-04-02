@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BookDetailsFragment extends Fragment {
@@ -12,6 +13,7 @@ public class BookDetailsFragment extends Fragment {
     Book book;
     TextView textViewTitle;
     TextView textViewAuthor;
+    ImageView imageViewCover;
 
     public BookDetailsFragment() {
         // Required empty public constructor
@@ -59,6 +61,7 @@ public class BookDetailsFragment extends Fragment {
 
         textViewTitle = layout.findViewById(R.id.textViewTitle);
         textViewAuthor = layout.findViewById(R.id.textViewAuthor);
+        imageViewCover = layout.findViewById(R.id.imageViewCover);
 
         if (book != null) {
             displayBook(book);
@@ -74,6 +77,11 @@ public class BookDetailsFragment extends Fragment {
 
         textViewAuthor.setText(book.getAuthor());
         textViewAuthor.setTextSize(30);
+
+        // TODO: Set image
+        /*
+        imageViewCover.setImageResource();
+        */
 
     }
 }
