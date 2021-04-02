@@ -24,12 +24,7 @@ public class BookDetailsFragment extends Fragment {
         BookDetailsFragment newFragment = new BookDetailsFragment();
 
         Bundle newBundle = new Bundle();
-
-        String title = book.getTitle();
-        String author = book.getAuthor();
-        newBundle.putString("TITLE", title);
-        newBundle.putString("AUTHOR", author);
-
+        newBundle.putParcelable("book", book);
         newFragment.setArguments(newBundle);
 
         return newFragment;
@@ -43,9 +38,7 @@ public class BookDetailsFragment extends Fragment {
         Bundle myBundle = getArguments();
 
         if (myBundle != null) {
-            String title = myBundle.getString("TITLE");
-            String author = myBundle.getString("AUTHOR");
-            book = new Book(title, author);
+            book = myBundle.getParcelable("book");
         } else {
             book = null;
         }

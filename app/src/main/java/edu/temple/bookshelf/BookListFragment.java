@@ -23,9 +23,7 @@ public class BookListFragment extends Fragment {
 
         if (booklist.size() > 0) {
             Bundle newBundle = new Bundle();
-            for (int i = 0; i < booklist.size(); i++) {
-                newBundle.putStringArrayList("book" + i, booklist.getList(i));
-            }
+            newBundle.putParcelable("booklist", booklist);
             newFragment.setArguments(newBundle);
         }
 
@@ -37,16 +35,10 @@ public class BookListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         bookList = new BookList();
-        ArrayList<String> strings = new ArrayList<>(2);
-
         Bundle myBundle = getArguments();
 
         if (myBundle != null) {
-            for (int i = 0; i < 10; i++) {
-                strings = myBundle.getStringArrayList("book" + i);
-                Book book = new Book(strings.get(0), strings.get(1));
-                bookList.add(book);
-            }
+            bookList = myBundle.getParcelable("booklist");
         }
     }
 
