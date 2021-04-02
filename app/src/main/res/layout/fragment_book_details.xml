@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageViewCover"
-        android:layout_width="425dp"
-        android:layout_height="540dp"
+        android:layout_width="411dp"
+        android:layout_height="408dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView

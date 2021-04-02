@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -107,12 +108,19 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         if (requestCode == LAUNCH_BOOK_SEARCH) {
             if (resultCode == Activity.RESULT_OK) {
-                // Do something
+                bookList = data.getParcelableExtra("booklist");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 bookList = new BookList();
             }
         }
+
+        bookListFragment = BookListFragment.newInstance(bookList);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container1, bookListFragment, "LISTADDED")
+                .commit();
 
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -10,9 +10,11 @@ public class Book implements Parcelable {
     String coverURL;
     int id;
 
-    public Book(String title, String author) {
+    public Book(String title, String author, String coverURL, int id) {
         this.title = title;
         this.author = author;
+        this.coverURL = coverURL;
+        this.id = id;
     }
 
     protected Book(Parcel in) {
@@ -40,6 +42,14 @@ public class Book implements Parcelable {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getCoverURL() {
+        return coverURL;
+    }
+
+    public int getID() {
+        return id;
     }
 
     @Override
