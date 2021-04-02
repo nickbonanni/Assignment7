@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/imageViewCover"
         android:layout_width="411dp"
-        android:layout_height="408dp"
+        android:layout_height="410dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView

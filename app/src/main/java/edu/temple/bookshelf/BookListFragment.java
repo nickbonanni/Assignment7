@@ -68,6 +68,13 @@ public class BookListFragment extends Fragment {
         return layout;
     }
 
+    public void updateList(BookListFragment bookListFragment) {
+
+
+
+
+    }
+
     interface BookListFragmentInterface {
         void fragmentClick(int position);
     }

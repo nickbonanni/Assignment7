@@ -42,11 +42,11 @@ public class ListAdapter extends BaseAdapter {
         }
 
         TextView bookTitle = (TextView) convertView.findViewById(R.id.bookTitle);
-        bookTitle.setTextSize(35);
+        bookTitle.setTextSize(25);
         bookTitle.setText(bookList.get(position).getTitle());
 
         TextView bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
-        bookAuthor.setTextSize(25);
+        bookAuthor.setTextSize(15);
         bookAuthor.setText(bookList.get(position).getAuthor());
 
         return convertView;

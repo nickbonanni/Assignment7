@@ -39,10 +39,7 @@ public class BookDetailsFragment extends Fragment {
 
         if (myBundle != null) {
             book = myBundle.getParcelable("book");
-        } else {
-            book = null;
         }
-
     }
 
     @Override
@@ -66,10 +63,10 @@ public class BookDetailsFragment extends Fragment {
     public void displayBook(Book book) {
 
         textViewTitle.setText(book.getTitle());
-        textViewTitle.setTextSize(40);
+        //textViewTitle.setTextSize(40);
 
         textViewAuthor.setText(book.getAuthor());
-        textViewAuthor.setTextSize(30);
+        //textViewAuthor.setTextSize(30);
 
         // TODO: Set image
         /*
