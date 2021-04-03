@@ -1,5 +1,6 @@
 package edu.temple.bookshelf;
 
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class BookDetailsFragment extends Fragment {
 
@@ -72,6 +75,7 @@ public class BookDetailsFragment extends Fragment {
         /*
         imageViewCover.setImageResource();
         */
+        Picasso.get().load(Uri.parse(book.getCoverURL())).into(imageViewCover);
 
     }
 }
