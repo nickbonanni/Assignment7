@@ -88,9 +88,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             if (resultCode == Activity.RESULT_OK) {
                 bookList = data.getParcelableExtra("booklist");
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                bookList = new BookList();
-            }
         }
 
         bookListFragment = BookListFragment.newInstance(bookList);

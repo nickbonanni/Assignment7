@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".BookDetailsFragment" >
+    tools:context=".BookDetailsFragment">
 
     <ImageView
         android:id="@+id/imageViewCover"
         android:layout_width="411dp"
-        android:layout_height="410dp"
+        android:layout_height="573dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
     <TextView
         android:id="@+id/textViewAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="61dp" />
 
 </LinearLayout>

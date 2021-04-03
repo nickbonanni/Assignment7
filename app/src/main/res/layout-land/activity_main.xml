@@ -9,23 +9,20 @@
     <FrameLayout
         android:id="@+id/container1"
         android:layout_width="330dp"
-        android:layout_height="318dp"
+        android:layout_height="220dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/container2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/container2"
         android:layout_width="330dp"
-        android:layout_height="0dp"
+        android:layout_height="367dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -33,7 +30,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/container1"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </FrameLayout>
 
@@ -41,9 +39,12 @@
         android:id="@+id/searchButton"
         android:layout_width="282dp"
         android:layout_height="40dp"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="48dp"
         android:text="@string/search"
+        app:layout_constraintEnd_toStartOf="@+id/container2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
