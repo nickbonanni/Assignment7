@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookDetailsFragment bookDetailsFragment;
     BookList bookList;
     Book book;
+    Button searchButton;
+
     String SELECTED_BOOK = "selectedBook";
     String CURRENT_LIST = "currentList";
 
-    boolean hasContainer2;
-
-    Button searchButton;
     int LAUNCH_BOOK_SEARCH = 1;
+    boolean hasContainer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .replace(R.id.container1, BookDetailsFragment.newInstance(book))
                     .addToBackStack(null)
                     .commit();
-
         }
     }
 }

@@ -52,8 +52,6 @@ public class BookSearchActivity extends AppCompatActivity {
 
                         booklist.add(book);
 
-                        Log.e("ERROR", "Adding book " + title);
-
                     }
 
                 } else {
@@ -136,6 +134,5 @@ public class BookSearchActivity extends AppCompatActivity {
 
         setResult(Activity.RESULT_CANCELED, result);
         finish();
-
     }
 }

@@ -19,7 +19,6 @@ public class BookDetailsFragment extends Fragment {
     ImageView imageViewCover;
 
     public BookDetailsFragment() {
-        // Required empty public constructor
     }
 
     public static BookDetailsFragment newInstance(Book book) {
@@ -49,7 +48,6 @@ public class BookDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View layout =  inflater.inflate(R.layout.fragment_book_details, container, false);
 
         textViewTitle = layout.findViewById(R.id.textViewTitle);
@@ -66,15 +64,9 @@ public class BookDetailsFragment extends Fragment {
     public void displayBook(Book book) {
 
         textViewTitle.setText(book.getTitle());
-        //textViewTitle.setTextSize(40);
 
         textViewAuthor.setText(book.getAuthor());
-        //textViewAuthor.setTextSize(30);
 
-        // TODO: Set image
-        /*
-        imageViewCover.setImageResource();
-        */
         Picasso.get().load(Uri.parse(book.getCoverURL())).into(imageViewCover);
 
     }
