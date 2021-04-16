@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     FragmentManager fm;
     BookListFragment bookListFragment;
     BookDetailsFragment bookDetailsFragment;
+    ControlFragment controlFragment;
     BookList bookList;
     Book book;
     Button searchButton;
@@ -40,11 +41,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         }
 
         bookListFragment = (bookList == null) ? new BookListFragment() : BookListFragment.newInstance(bookList);
+        controlFragment = new ControlFragment();
 
         hasContainer2 = findViewById(R.id.container2) != null;
         searchButton = (Button) findViewById(R.id.searchButton);
 
         fm = getSupportFragmentManager();
+
+        fm.beginTransaction()
+                .add(R.id.controlContainer, controlFragment)
+                .commit();
 
         Fragment fragment1 = fm.findFragmentById(R.id.container1);
 

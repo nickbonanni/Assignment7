@@ -22,7 +22,7 @@
     <FrameLayout
         android:id="@+id/container2"
         android:layout_width="330dp"
-        android:layout_height="367dp"
+        android:layout_height="227dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -47,4 +47,21 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/controlContainer"
+        android:layout_width="328dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/container1"
+        app:layout_constraintTop_toBottomOf="@+id/container2"
+        app:layout_constraintVertical_bias="1.0">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
