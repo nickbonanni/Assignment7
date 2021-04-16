@@ -7,13 +7,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements BookListFragment.BookListFragmentInterface {
+import edu.temple.audiobookplayer.AudiobookService;
+
+public class MainActivity extends AppCompatActivity implements BookListFragment.BookListFragmentInterface, ControlFragment.ControlFragmentInterface {
 
     FragmentManager fm;
     BookListFragment bookListFragment;
@@ -29,6 +35,30 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     int LAUNCH_BOOK_SEARCH = 1;
     boolean hasContainer2;
 
+    AudiobookService.MediaControlBinder binder;
+    boolean isConnected;
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (AudiobookService.MediaControlBinder) service;
+            isConnected = true;
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isConnected = false;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, AudiobookService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,13 +71,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         }
 
         bookListFragment = (bookList == null) ? new BookListFragment() : BookListFragment.newInstance(bookList);
-        controlFragment = new ControlFragment();
 
         hasContainer2 = findViewById(R.id.container2) != null;
         searchButton = (Button) findViewById(R.id.searchButton);
 
         fm = getSupportFragmentManager();
 
+        controlFragment = new ControlFragment();
         fm.beginTransaction()
                 .add(R.id.controlContainer, controlFragment)
                 .commit();
@@ -139,5 +169,23 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    public void onPlayClick() {
+
+        binder.play(book.getID());
+
+    }
+
+    public void onPauseClick() {
+
+        binder.pause();
+
+    }
+
+    public void onStopClick() {
+
+        binder.stop();
+
     }
 }

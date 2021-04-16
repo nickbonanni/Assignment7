@@ -8,7 +8,7 @@
     tools:context=".ControlFragment">
 
     <TextView
-        android:id="@+id/nowPlayingText"
+        android:id="@+id/nowPlayingTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/nowPlaying"
@@ -30,13 +30,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nowPlayingText">
+        app:layout_constraintTop_toBottomOf="@+id/nowPlayingTextView">
 
         <ImageButton
             android:id="@+id/pauseButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/pause"
             android:src="@android:drawable/ic_media_pause" />
 
         <ImageButton
@@ -44,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/play"
             android:src="@android:drawable/ic_media_play" />
 
         <ImageButton
@@ -51,12 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:contentDescription="@string/stop"
             android:src="@android:drawable/picture_frame" />
 
     </LinearLayout>
 
     <SeekBar
-        android:id="@+id/seekBar3"
+        android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
