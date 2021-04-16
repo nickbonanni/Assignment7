@@ -47,8 +47,9 @@ public class BookSearchActivity extends AppCompatActivity {
                         String author = jsonBook.getString("author");
                         String coverURL = jsonBook.getString("cover_url");
                         int id = jsonBook.getInt("id");
+                        int duration = jsonBook.getInt("duration");
 
-                        Book book = new Book(title, author, coverURL, id);
+                        Book book = new Book(title, author, coverURL, id, duration);
 
                         booklist.add(book);
 
