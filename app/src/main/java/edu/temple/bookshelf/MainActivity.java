@@ -12,9 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import edu.temple.audiobookplayer.AudiobookService;
@@ -36,14 +38,27 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     boolean hasContainer2;
 
     AudiobookService.MediaControlBinder binder;
+    AudiobookService.BookProgress bookProgress;
     boolean isConnected;
+    int progress;
+
+    Handler seekBarHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            bookProgress = (AudiobookService.BookProgress) msg.obj;
+            if (bookProgress != null) {
+                progress = bookProgress.getProgress();
+            }
+            return true;
+        }
+    });
 
     ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             binder = (AudiobookService.MediaControlBinder) service;
+            binder.setProgressHandler(seekBarHandler);
             isConnected = true;
-
         }
 
         @Override
@@ -77,10 +92,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         fm = getSupportFragmentManager();
 
-        controlFragment = new ControlFragment();
-        fm.beginTransaction()
-                .add(R.id.controlContainer, controlFragment)
-                .commit();
+        Fragment fragment2 = fm.findFragmentById(R.id.controlContainer);
+        controlFragment = (book == null) ? new ControlFragment() : ControlFragment.newInstance(book);
+
+        if (!(fragment2 instanceof ControlFragment)) {
+
+            fm.beginTransaction()
+                    .add(R.id.controlContainer, controlFragment)
+                    .commit();
+        }
 
         Fragment fragment1 = fm.findFragmentById(R.id.container1);
 
@@ -105,15 +125,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .commit();
         }
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        searchButton.setOnClickListener(v -> {
 
-                Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
+            Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
 
-                startActivityForResult(intent, LAUNCH_BOOK_SEARCH);
+            startActivityForResult(intent, LAUNCH_BOOK_SEARCH);
 
-            }
         });
     }
 
@@ -126,7 +143,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
         }
 
-        bookListFragment = BookListFragment.newInstance(bookList);
+        if (bookList != null) {
+            bookListFragment = BookListFragment.newInstance(bookList);
+        }
+
         Fragment fragment1 = fm.findFragmentById(R.id.container1);
 
         if (fragment1 instanceof BookDetailsFragment) {
@@ -156,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     public void fragmentClick(int position) {
 
         book = bookList.get(position);
-        Log.e("ERROR", book.getTitle());
 
         if (hasContainer2) {
 
@@ -169,23 +188,58 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .addToBackStack(null)
                     .commit();
         }
+
+        controlFragment = ControlFragment.newInstance(book);
+
+        fm.beginTransaction()
+                .replace(R.id.controlContainer, controlFragment)
+                .commit();
+
     }
 
     public void onPlayClick() {
 
-        binder.play(book.getID());
+        if (isConnected && book != null) {
+            binder.play(book.getID());
+            controlFragment.seekBar.setMax(book.getDuration());
+            updateProgressBar();
+        }
 
     }
 
     public void onPauseClick() {
 
-        binder.pause();
+        if (isConnected && book != null) {
+            binder.pause();
+        }
 
     }
 
     public void onStopClick() {
 
+        progress = 0;
         binder.stop();
+        updateProgressBar();
 
     }
+
+    public void onSeekBarChange(int position) {
+
+        binder.seekTo(position);
+
+    }
+
+    public void updateProgressBar() {
+        seekBarHandler.postDelayed(updateBar, 1000);
+    }
+
+    private Runnable updateBar = new Runnable() {
+        @Override
+        public void run() {
+
+            controlFragment.seekBar.setProgress(progress);
+
+            seekBarHandler.postDelayed(this, 1000);
+        }
+    };
 }

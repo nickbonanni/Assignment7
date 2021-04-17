@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,18 @@ public class ControlFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static ControlFragment newInstance(Book book) {
+
+        ControlFragment newFragment = new ControlFragment();
+
+        Bundle newBundle = new Bundle();
+        newBundle.putParcelable("book", book);
+        newFragment.setArguments(newBundle);
+
+        return newFragment;
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -41,6 +55,13 @@ public class ControlFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle myBundle = getArguments();
+
+        if (myBundle != null) {
+            book = myBundle.getParcelable("book");
+        }
+
     }
 
     @Override
@@ -50,33 +71,43 @@ public class ControlFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_control, container, false);
 
-        nowPlayingTextView = layout.findViewById(R.id.nowPlayingTextView);
-        nowPlayingTextView.setVisibility(View.INVISIBLE);
-
+        nowPlayingTextView = (TextView) layout.findViewById(R.id.nowPlayingTextView);
         playButton = layout.findViewById(R.id.playButton);
         pauseButton = layout.findViewById(R.id.pauseButton);
         stopButton = layout.findViewById(R.id.stopButton);
         seekBar = layout.findViewById(R.id.seekBar);
+        String np = "Now Playing: ";
+        String title = book.getTitle();
+        title = np + title;
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+        if (book != null) {
+            nowPlayingTextView.setText(title);
+        }
+
+        playButton.setOnClickListener(v -> listener.onPlayClick());
+
+        pauseButton.setOnClickListener(v -> listener.onPauseClick());
+
+        stopButton.setOnClickListener(v -> listener.onStopClick());
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                nowPlayingTextView.setVisibility(View.VISIBLE);
-                listener.onPlayClick();
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                if (fromUser) {
+                    listener.onSeekBarChange(progress);
+                }
+
             }
-        });
 
-        pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                listener.onPauseClick();
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
             }
-        });
 
-        stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                listener.onStopClick();
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
@@ -87,5 +118,6 @@ public class ControlFragment extends Fragment {
         void onPlayClick();
         void onPauseClick();
         void onStopClick();
+        void onSeekBarChange(int position);
     }
 }
