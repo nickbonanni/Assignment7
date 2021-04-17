@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,12 +76,14 @@ public class ControlFragment extends Fragment {
         stopButton = layout.findViewById(R.id.stopButton);
         seekBar = layout.findViewById(R.id.seekBar);
         String np = "Now Playing: ";
-        String title = book.getTitle();
-        title = np + title;
+        String title = "";
 
         if (book != null) {
-            nowPlayingTextView.setText(title);
+            title = book.getTitle();
+            title = np + title;
         }
+
+        nowPlayingTextView.setText(title);
 
         playButton.setOnClickListener(v -> listener.onPlayClick());
 

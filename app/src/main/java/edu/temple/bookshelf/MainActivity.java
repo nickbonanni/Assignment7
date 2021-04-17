@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Button;
 
 import edu.temple.audiobookplayer.AudiobookService;
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             fm.beginTransaction()
                     .add(R.id.controlContainer, controlFragment)
                     .commit();
+
         }
 
         Fragment fragment1 = fm.findFragmentById(R.id.container1);
@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     public void onPlayClick() {
 
         if (isConnected && book != null) {
+            progress = 0;
             binder.play(book.getID());
             controlFragment.seekBar.setMax(book.getDuration());
             updateProgressBar();
@@ -230,7 +231,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     public void updateProgressBar() {
+
         seekBarHandler.postDelayed(updateBar, 1000);
+
     }
 
     private Runnable updateBar = new Runnable() {
@@ -238,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         public void run() {
 
             controlFragment.seekBar.setProgress(progress);
-
             seekBarHandler.postDelayed(this, 1000);
+
         }
     };
 }
